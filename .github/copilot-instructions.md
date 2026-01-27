@@ -36,7 +36,9 @@
 - Export types that may be used by other components
 
 ## Gov Design System CE
-- Import components from `@gov-design-system-ce/react`
+- Import components strictly from this package:
+  `import { GovButton, GovFormInput } from '@gov-design-system-ce/react';`
+- Do not use sub-path imports (e.g., avoid `@gov-design-system-ce/react/button`)
 - Use Gov Design System components (e.g., `GovButton`, `GovFormInput`) instead of native HTML elements when available
 - Follow the design system's color, size, and type props (e.g., `color='primary'`, `type='solid'`, `size='m'`)
 - Reference icons from `/public/icons/` directories (colored, complex, components)
