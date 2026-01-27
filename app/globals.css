@@ -1,0 +1,12 @@
+/* Variables. */
+@import "@gov-design-system-ce/styles/html/tokens.css";
+/* General settings. */
+@import "@gov-design-system-ce/styles/html/styles.css";
+/* Styles for basic layout and containers. */
+@import "@gov-design-system-ce/styles/html/layout.css";
+/* Styles of individual components. */
+@import "@gov-design-system-ce/styles/html/components.css";
+/* Styles of animations. */
+@import "@gov-design-system-ce/styles/html/animations.css";
+/* import Roboto @font-face declarations */
+@import "@gov-design-system-ce/fonts/lib/roboto.css";
