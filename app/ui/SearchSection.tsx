@@ -3,13 +3,17 @@
 import { useState } from 'react';
 import { GovFormSearch, GovFormInput, GovButton } from '@gov-design-system-ce/react';
 import Image from 'next/image';
+import FilterChips from './FilterChips';
+import type { FilterValues } from './AdvancedFilterPanel';
 
 type SearchSectionProps = {
     onSearch?: (query: string) => void;
     onAdvancedSearchClick?: () => void;
+    appliedFilters?: FilterValues | null;
+    onRemoveFilter?: (key: keyof FilterValues) => void;
 };
 
-export default function SearchSection({ onSearch, onAdvancedSearchClick }: SearchSectionProps) {
+export default function SearchSection({ onSearch, onAdvancedSearchClick, appliedFilters = null, onRemoveFilter }: SearchSectionProps) {
     const [searchQuery, setSearchQuery] = useState('');
 
     const handleSearch = () => {
@@ -61,6 +65,12 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick }: Searc
                 >
                     Advanced search
                 </button>
+
+                {appliedFilters && (
+                    <div className="filter-chips-wrapper">
+                        <FilterChips filters={appliedFilters} onRemove={onRemoveFilter ?? (() => { })} />
+                    </div>
+                )}
             </div>
         </section>
     );

@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import Header from './ui/Header';
-import SearchSection from './ui/SearchSection';
-import InterestingLinks from './ui/InterestingLinks';
-import FaqSection from './ui/FaqSection';
-import Footer from './ui/Footer';
-import AdvancedFilterPanel, { FilterValues } from './ui/AdvancedFilterPanel';
+import Header from '../ui/Header';
+import SearchSection from '../ui/SearchSection';
+import InterestingLinks from '../ui/InterestingLinks';
+import FaqSection from '../ui/FaqSection';
+import Footer from '../ui/Footer';
+import AdvancedFilterPanel, { FilterValues } from '../ui/AdvancedFilterPanel';
 
-export default function Home() {
-    const [isFilterOpen, setIsFilterOpen] = useState(false);
+export default function AdvancedFilterPage() {
+    const [isFilterOpen, setIsFilterOpen] = useState(true);
     const [appliedFilters, setAppliedFilters] = useState<FilterValues | null>(null);
 
     const router = useRouter();
