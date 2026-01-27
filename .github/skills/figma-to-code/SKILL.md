@@ -56,7 +56,41 @@ Map Figma elements to Gov Design System components:
 | Alert/Message | `GovMessage` | `variant="primary\|secondary\|success\|error\|warning"` |
 | Icon | Native `<img>` | Use `/public/icons/` paths |
 
-### Step 3: Generate TypeScript Component
+### Step 3: Analyze Icons and Map to Assets
+
+When the Figma design contains icons:
+
+1. **Extract icon information** from Figma using MCP tools:
+   - Identify all icon nodes in the design
+   - Note icon names, sizes, and colors used
+   - Check if icons are decorative or functional
+
+2. **Review available icons** in `/public/icons/`:
+   - `/public/icons/colored/` - Icons with predefined colors
+   - `/public/icons/complex/` - Multi-part or detailed icons
+   - `/public/icons/components/` - UI component icons (arrows, chevrons, etc.)
+
+3. **Match Figma icons to existing assets**:
+   - Compare icon names and visual appearance
+   - Propose the closest matching icon from the public folder
+   - Document any icons that need to be downloaded from Figma
+
+4. **Icon mapping output format**:
+   ```
+   | Figma Icon Name | Proposed Asset Path | Match Status |
+   |-----------------|---------------------|--------------|
+   | search-icon     | /icons/components/search.svg | ✓ Exact match |
+   | arrow-right     | /icons/components/chevron-right.svg | ~ Similar |
+   | custom-logo     | N/A | ✗ Download from Figma |
+   ```
+
+5. **For missing icons**:
+   - List all icons that are not available in `/public/icons/`
+   - Provide the Figma node ID and asset URL for each missing icon
+   - Suggest the target path and filename (e.g., `/public/icons/components/user-profile.svg`)
+   - The user will download and save the icons manually
+
+### Step 4: Generate TypeScript Component
 
 Follow this component structure:
 
