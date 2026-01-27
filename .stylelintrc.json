@@ -1,0 +1,172 @@
+{
+    "extends": [
+        "stylelint-config-standard"
+    ],
+    "rules": {
+        "unit-disallowed-list": [
+            [
+                "px",
+                "pt",
+                "pc",
+                "in",
+                "cm",
+                "mm"
+            ],
+            {
+                "message": "Use rem units instead of %s. Conversion: 1rem = 16px",
+                "ignoreProperties": {
+                    "px": [
+                        "border",
+                        "border-width",
+                        "border-top",
+                        "border-right",
+                        "border-bottom",
+                        "border-left",
+                        "outline",
+                        "outline-width",
+                        "box-shadow"
+                    ]
+                }
+            }
+        ],
+        "declaration-property-unit-allowed-list": {
+            "font-size": [
+                "rem",
+                "%"
+            ],
+            "line-height": [
+                "rem",
+                ""
+            ],
+            "letter-spacing": [
+                "rem",
+                "em"
+            ],
+            "width": [
+                "rem",
+                "%",
+                "vw",
+                "fr"
+            ],
+            "height": [
+                "rem",
+                "%",
+                "vh"
+            ],
+            "min-width": [
+                "rem",
+                "%"
+            ],
+            "max-width": [
+                "rem",
+                "%"
+            ],
+            "min-height": [
+                "rem",
+                "%"
+            ],
+            "max-height": [
+                "rem",
+                "%"
+            ],
+            "margin": [
+                "rem",
+                "%",
+                ""
+            ],
+            "margin-top": [
+                "rem",
+                "%",
+                ""
+            ],
+            "margin-right": [
+                "rem",
+                "%",
+                ""
+            ],
+            "margin-bottom": [
+                "rem",
+                "%",
+                ""
+            ],
+            "margin-left": [
+                "rem",
+                "%",
+                ""
+            ],
+            "padding": [
+                "rem",
+                "%",
+                ""
+            ],
+            "padding-top": [
+                "rem",
+                "%",
+                ""
+            ],
+            "padding-right": [
+                "rem",
+                "%",
+                ""
+            ],
+            "padding-bottom": [
+                "rem",
+                "%",
+                ""
+            ],
+            "padding-left": [
+                "rem",
+                "%",
+                ""
+            ],
+            "gap": [
+                "rem",
+                "%"
+            ],
+            "row-gap": [
+                "rem",
+                "%"
+            ],
+            "column-gap": [
+                "rem",
+                "%"
+            ],
+            "border-radius": [
+                "rem",
+                "%"
+            ],
+            "top": [
+                "rem",
+                "%"
+            ],
+            "right": [
+                "rem",
+                "%"
+            ],
+            "bottom": [
+                "rem",
+                "%"
+            ],
+            "left": [
+                "rem",
+                "%"
+            ]
+        },
+        "color-named": "never",
+        "color-no-hex": null,
+        "color-hex-length": null,
+        "comment-empty-line-before": null,
+        "declaration-block-no-redundant-longhand-properties": true,
+        "shorthand-property-no-redundant-values": true,
+        "no-descending-specificity": null,
+        "selector-class-pattern": null,
+        "custom-property-pattern": null,
+        "import-notation": null
+    },
+    "ignoreFiles": [
+        "node_modules/**",
+        ".next/**",
+        "public/**",
+        "app/tokens.css"
+    ]
+}

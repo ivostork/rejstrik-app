@@ -7,6 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "eslint",
+        "lint:css": "stylelint \"app/**/*.css\"",
         "copy:icons": "copyfiles --flat ./node_modules/@gov-design-system-ce/icons/lib/colored/* ./public/icons/colored && copyfiles --flat ./node_modules/@gov-design-system-ce/icons/lib/complex/* ./public/icons/complex && copyfiles --flat ./node_modules/@gov-design-system-ce/icons/lib/components/* ./public/icons/components",
         "copy:fonts": "copyfiles --flat ./node_modules/@gov-design-system-ce/fonts/lib/* ./public/fonts"
     },
@@ -23,6 +24,8 @@
         "copyfiles": "^2.4.1",
         "eslint": "^9",
         "eslint-config-next": "16.1.5",
+        "stylelint": "^17.0.0",
+        "stylelint-config-standard": "^40.0.0",
         "typescript": "^5"
     }
 }

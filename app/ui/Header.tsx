@@ -17,8 +17,8 @@ export default function Header({ onThemeToggle, isDarkMode = false }: HeaderProp
                         <Image
                             src="/Logo/lev/lev.svg"
                             alt=""
-                            width={32}
-                            height={32}
+                            width={40}
+                            height={40}
                             className="header-logo-image"
                             aria-hidden="true"
                         />
@@ -42,7 +42,7 @@ export default function Header({ onThemeToggle, isDarkMode = false }: HeaderProp
                             EN
                         </GovButton>
 
-                        <GovFormSwitch
+                        {/* <GovFormSwitch
                             size="m"
                             checked={isDarkMode}
                             onChange={onThemeToggle}
@@ -55,7 +55,7 @@ export default function Header({ onThemeToggle, isDarkMode = false }: HeaderProp
                                 height={12}
                                 aria-hidden="true"
                             />
-                        </GovFormSwitch>
+                        </GovFormSwitch> */}
                     </div>
                 </div>
             </div>

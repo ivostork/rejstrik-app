@@ -39,8 +39,7 @@ export default function FaqSection() {
                 <div className="faq-content">
                     <GovAccordion size="m">
                         {FAQ_ITEMS.map((item) => (
-                            <GovAccordionItem key={item.id}>
-                                <span slot="label">{item.question}</span>
+                            <GovAccordionItem key={item.id} label={item.question}>
                                 <p>{item.answer}</p>
                             </GovAccordionItem>
                         ))}

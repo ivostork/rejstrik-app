@@ -39,6 +39,7 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick }: Searc
                                     alt=""
                                     width={20}
                                     height={20}
+                                    className='icon-currentColor'
                                 />
                             </GovButton>
                         }

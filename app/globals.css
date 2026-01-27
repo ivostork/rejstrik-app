@@ -1,5 +1,5 @@
 /* Variables. */
-@import "@gov-design-system-ce/styles/html/tokens.css";
+@import "tokens.css";
 /* General settings. */
 @import "@gov-design-system-ce/styles/html/styles.css";
 /* Styles for basic layout and containers. */
@@ -13,56 +13,59 @@
 
 /* ===== Custom Design Tokens ===== */
 :root[data-theme="light"] {
-    /* Primary Colors */
+    /* Layout */
+    --max-content-width: 75rem;
+    --content-padding: 1.5rem;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-s: 0.5rem;
+    --spacing-m: 1rem;
+    --spacing-l: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 2.5rem;
+    --spacing-3xl: 3rem;
+
+    /* Search Section Spacing */
+    --search-section-padding-top: 3rem;
+    --search-section-padding-bottom: 1.5rem;
+    --search-title-input-gap: 0.75rem;
+    --search-input-link-gap: 0.5rem;
+
+    /* Search Input Border (from Figma: #b0b0b0) */
+    --search-input-border: #b0b0b0;
+
+    /* Typography */
+    --font-family: 'Roboto', sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-s: 0.875rem;
+    --font-size-m: 1rem;
+    --font-size-l: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 2rem;
+    --font-size-4xl: 2.5rem;
+
+    /* Border Radius */
+    --radius-xs: 0.25rem;
+    --radius-s: 0.5rem;
+    --radius-m: 0.75rem;
+
+    /* Colors */
     --color-primary: #006633;
     --color-primary-dark: #004d26;
     --color-primary-light: #b2efc2;
-
-    /* Text Colors */
     --color-text-primary: #262626;
     --color-text-secondary: #4f4f4f;
     --color-text-inverse: #ffffff;
     --color-text-link: #006633;
     --color-text-link-footer: #b2efc2;
-
-    /* Background Colors */
     --color-bg-page: #ffffff;
     --color-bg-neutral: #f5f5f5;
     --color-bg-footer: #000000;
     --color-bg-tile-hover: #f0f0f0;
-
-    /* Border Colors */
     --color-border-subtle: #e7e7e7;
     --color-border-default: #d1d1d1;
-
-    /* Spacing */
-    --spacing-xs: 4px;
-    --spacing-s: 8px;
-    --spacing-m: 16px;
-    --spacing-l: 24px;
-    --spacing-xl: 32px;
-    --spacing-2xl: 40px;
-    --spacing-3xl: 48px;
-
-    /* Layout */
-    --max-content-width: 1200px;
-    --content-padding: 24px;
-
-    /* Typography */
-    --font-family: 'Roboto', sans-serif;
-    --font-size-xs: 12px;
-    --font-size-s: 14px;
-    --font-size-m: 16px;
-    --font-size-l: 18px;
-    --font-size-xl: 20px;
-    --font-size-2xl: 24px;
-    --font-size-3xl: 32px;
-    --font-size-4xl: 40px;
-
-    /* Border Radius */
-    --radius-xs: 4px;
-    --radius-s: 8px;
-    --radius-m: 12px;
 }
 
 /* ===== Page Layout Styles ===== */
@@ -106,8 +109,8 @@
 }
 
 .header-logo-image {
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 .header-logo-title {
@@ -117,15 +120,30 @@
     color: var(--color-primary);
 }
 
+/* Header actions - ensure language & theme controls align with Figma node 497-33715 */
 .header-actions {
     display: flex;
     align-items: center;
     gap: var(--spacing-m);
+    flex-wrap: nowrap;
 }
+
+/* Ensure each control is centered inside header actions */
+.header-actions>* {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* Center the gov form switch knob vertically for size m */
+.gov-form-switch[data-size="m"] .gov-form-switch__input {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 
 /* ===== Search Section Styles ===== */
 .search-section {
-    padding: var(--spacing-3xl) 0 var(--spacing-l);
+    padding: var(--search-section-padding-top) 0 var(--search-section-padding-bottom);
 }
 
 .search-title {
@@ -133,23 +151,37 @@
     font-size: var(--font-size-4xl);
     font-weight: 500;
     color: var(--color-text-primary);
-    margin-bottom: var(--spacing-m);
+    margin-bottom: var(--search-title-input-gap);
     line-height: 1.3;
 }
 
 .search-input-wrapper {
     position: relative;
-    margin-bottom: var(--spacing-s);
+    margin-bottom: var(--search-input-link-gap);
+}
+
+/* Override GovFormSearch input border to match Figma design */
+.gov-form-search[data-size="l"] {
+    border: 1px solid var(--search-input-border);
+    border-radius: var(--radius-s);
+    height: var(--height-4xl);
+}
+
+.gov-form-search:hover {
+    background-color: var(--color-primary-50);
 }
 
 .advanced-search-link {
     display: inline-block;
     font-family: var(--font-family);
-    font-size: var(--font-size-s);
+    font-size: var(--font-size-m);
     font-weight: 700;
     color: var(--color-primary);
     text-decoration: none;
     cursor: pointer;
+    background: none;
+    border: none;
+    padding: 0;
 }
 
 .advanced-search-link:hover {
@@ -163,7 +195,7 @@
 
 .tiles-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(328px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(20.5rem, 1fr));
     gap: var(--spacing-l);
 }
 
@@ -183,14 +215,14 @@
 }
 
 .tile-icon {
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
 }
 
 .tile-content {
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 0.125rem;
 }
 
 .tile-header {
@@ -209,10 +241,10 @@
 }
 
 .tile-chevron {
-    width: 14px;
-    height: 14px;
+    width: 0.875rem;
+    height: 0.875rem;
     flex-shrink: 0;
-    margin-top: 3px;
+    margin-top: 0.1875rem;
 }
 
 .tile-description {
@@ -227,11 +259,58 @@
 /* ===== FAQ Section Styles ===== */
 .faq-section {
     padding: var(--spacing-3xl) 0;
+    /* Keep background transparent unless Figma shows a different backdrop */
+    background-color: transparent;
+}
+
+.faq-section .section-title {
+    color: var(--color-text-primary);
 }
 
 .faq-content {
-    max-width: 820px;
+    max-width: 51.25rem;
 }
+
+/* Target the accordion label slot directly so labels are visible and follow tokens */
+.faq-section [slot="label"] {
+    display: block;
+    color: var(--color-text-primary);
+    font-family: var(--font-family);
+    font-size: var(--font-size-m);
+    font-weight: 600;
+    line-height: 1.4;
+    padding: 0.5rem 0;
+}
+
+/* Ensure any internal gov classes don't override our color or background */
+.faq-section .gov-accordion__item,
+.faq-section .gov-accordion__item .gov-accordion__label {
+    background: transparent;
+    color: inherit;
+}
+
+/* Answers and content */
+.faq-section .gov-accordion__content,
+.faq-section p {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-s);
+    margin: 0;
+    padding-top: var(--spacing-s);
+    line-height: 1.6;
+}
+
+/* Hover & focus states for accessibility */
+.faq-section [slot="label"]:focus,
+.faq-section [slot="label"]:hover {
+    outline: none;
+    text-decoration: underline;
+}
+
+.gov-accordion-item:hover>details>summary {
+    background-color: var(--color-primary-50);
+}
+
+/*
 
 /* ===== Footer Styles ===== */
 .footer {
@@ -248,12 +327,12 @@
 .footer-columns {
     display: flex;
     flex-wrap: wrap;
-    gap: 56px;
+    gap: 3.5rem;
     flex: 1;
 }
 
 .footer-section {
-    min-width: 200px;
+    min-width: 12.5rem;
 }
 
 .footer-section-title {
@@ -299,8 +378,8 @@
 }
 
 .footer-contact-icon {
-    width: 14px;
-    height: 14px;
+    width: 0.875rem;
+    height: 0.875rem;
     flex-shrink: 0;
 }
 
@@ -314,8 +393,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 2rem;
+    height: 2rem;
     background-color: var(--color-bg-page);
     border-radius: var(--radius-s);
     cursor: pointer;
@@ -327,16 +406,16 @@
 }
 
 .footer-social-icon {
-    width: 14px;
-    height: 14px;
+    width: 0.875rem;
+    height: 0.875rem;
 }
 
 .footer-back-to-top {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    width: 2.5rem;
+    height: 2.5rem;
     background-color: var(--color-bg-page);
     border-radius: var(--radius-s);
     cursor: pointer;
@@ -374,7 +453,11 @@
 }
 
 .footer-meta-divider {
-    width: 1px;
-    height: 16px;
+    width: 0.0625rem;
+    height: 1rem;
     background-color: var(--color-border-default);
+}
+
+.icon-currentColor {
+    filter: invert(1) brightness(2);
 }

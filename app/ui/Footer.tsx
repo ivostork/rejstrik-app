@@ -119,7 +119,7 @@ export default function Footer() {
                                 </div>
                                 <div className="footer-contact-row">
                                     <Image
-                                        src="/icons/components/envelope-fill.svg"
+                                        src="/icons/components/envelope.svg"
                                         alt=""
                                         width={14}
                                         height={14}
