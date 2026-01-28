@@ -14,7 +14,7 @@ export default function Breadcrumbs({ query }: Props) {
             <span className="breadcrumb-sep" aria-hidden>
                 <Image src="/icons/components/chevron-right.svg" alt="" width={12} height={12} />
             </span>
-            <span className="breadcrumb-current">{query ? `Results for "${query}"` : 'Search results'}</span>
+            <span className="breadcrumb-current">{query ? `Results` : 'Results'}</span>
         </nav>
     );
 }

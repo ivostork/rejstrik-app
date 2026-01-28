@@ -872,8 +872,8 @@
 
 .result-card {
     background: var(--color-bg-page);
-    border-radius: 1rem;
-    /* 16px as in Figma */
+    border-radius: var(--radius-m);
+    /* Uses design token for radius */
     padding: var(--spacing-m);
     border: 1px solid var(--color-border-subtle);
 }
@@ -881,7 +881,7 @@
 .result-card-title {
     font-size: var(--font-size-2xl);
     font-weight: 500;
-    color: var(--color-text-primary-color);
+    color: var(--color-primary);
     line-height: 1.5;
     max-height: 3.75rem;
     /* approx 60px */
@@ -913,11 +913,17 @@
     align-items: center;
 }
 
+.contact>span {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
 .contact .phone-text,
 .contact .address-text {
-    margin-left: 0.5rem;
     font-size: var(--font-size-s);
     color: var(--color-text-secondary);
+    margin: 0;
 }
 
 .icon-small {
