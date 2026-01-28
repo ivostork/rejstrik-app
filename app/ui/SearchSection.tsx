@@ -141,6 +141,26 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
         }
     };
 
+    const handleClear = () => {
+        setSearchQuery('');
+        setSuggestions([]);
+        setIsOpen(false);
+        setShowingRecent(false);
+        setHighlightedIndex(-1);
+
+        // Clear applied filters if a removal callback is provided
+        if (appliedFilters && onRemoveFilter) {
+            (Object.keys(appliedFilters) as Array<keyof FilterValues>).forEach((k) => {
+                if (appliedFilters[k]) onRemoveFilter(k);
+            });
+        }
+
+        // Refocus input for better UX
+        setTimeout(() => {
+            inputRef.current?.focus();
+        }, 0);
+    };
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         const items = showingRecent ? recentSearches : suggestions;
         const visibleLen = Math.min(items.length, 10);
@@ -149,11 +169,9 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
             setIsOpen(true);
             setHighlightedIndex((prev) => {
                 if (e.key === 'ArrowDown') {
-                    // wrap from last -> first
                     if (prev === -1) return 0;
                     return (prev + 1) % visibleLen;
                 }
-                // ArrowUp: wrap from first -> last
                 if (prev === -1) return visibleLen - 1;
                 return (prev - 1 + visibleLen) % visibleLen;
             });
@@ -162,6 +180,11 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
 
         if (e.key === 'Escape') {
             e.preventDefault();
+            // If there's content, treat Escape as clear; otherwise close suggestions
+            if (searchQuery.trim() !== '') {
+                handleClear();
+                return;
+            }
             setIsOpen(false);
             setHighlightedIndex(-1);
             return;
@@ -198,17 +221,7 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
         }
     }, [suggestions, highlightedIndex]);
 
-    const handleClear = () => {
-        setSearchQuery('');
-        setSuggestions([]);
-        setIsOpen(false);
-        setShowingRecent(false);
-        setHighlightedIndex(-1);
-        // Refocus input for better UX
-        setTimeout(() => {
-            inputRef.current?.focus();
-        }, 0);
-    };
+    // handleClear is implemented above — duplicate removed to avoid redeclaration
 
     return (
         <section className="search-section">
@@ -263,7 +276,7 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
                             onClick={handleClear}
                             aria-label="Clear search"
                         >
-                            <Image src="/icons/components/x-lg.svg" alt="" width={16} height={16} className="icon-currentColor" />
+                            <Image src="/icons/components/x-lg.svg" alt="" width={16} height={16} />
                         </button>
                     )}
 
