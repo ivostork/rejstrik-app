@@ -269,7 +269,7 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
 
                     {isOpen && suggestions.length > 0 && (
                         <div className="autocomplete-list" role="listbox" id={listboxId} aria-label={showingRecent ? 'Recent searches' : 'Suggestions'}>
-                            {showingRecent && <div className="autocomplete-section-title">Recent searches</div>}
+                            {showingRecent}
                             {suggestions.map((s, i) => (
                                 <div
                                     key={s + i}
