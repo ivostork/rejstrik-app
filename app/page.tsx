@@ -16,6 +16,18 @@ export default function Home() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
+    const handleNavigateToResults = (query: string) => {
+        const params = new URLSearchParams();
+        if (query) params.set('q', query);
+        if (appliedFilters) {
+            Object.entries(appliedFilters).forEach(([k, v]) => {
+                if (v) params.set(k, v);
+            });
+        }
+        const url = `/search/results?${params.toString()}`;
+        router.push(url);
+    };
+
     const handleOpenFilter = () => {
         setIsFilterOpen(true);
     };
@@ -64,7 +76,7 @@ export default function Home() {
         <div className="page-wrapper">
             <Header />
             <main>
-                <SearchSection onAdvancedSearchClick={handleOpenFilter} appliedFilters={appliedFilters} onRemoveFilter={removeFilter} />
+                <SearchSection onAdvancedSearchClick={handleOpenFilter} appliedFilters={appliedFilters} onRemoveFilter={removeFilter} onSearch={handleNavigateToResults} />
                 <InterestingLinks />
                 <FaqSection />
             </main>

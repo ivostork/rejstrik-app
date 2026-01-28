@@ -805,3 +805,123 @@
 .gov-form-select select:hover {
     background: var(--color-primary-50);
 }
+
+/* ===== Search Results & Breadcrumbs ===== */
+.breadcrumbs {
+    display: flex;
+    gap: var(--spacing-s);
+    align-items: center;
+    height: 2rem;
+    /* 32px */
+    margin-bottom: var(--spacing-s);
+    font-size: var(--font-size-s);
+    color: var(--color-text-secondary);
+}
+
+.breadcrumbs .breadcrumb-link {
+    color: var(--color-text-link);
+    text-decoration: none;
+}
+
+.breadcrumbs .breadcrumb-sep {
+    display: flex;
+    align-items: center;
+    color: var(--color-text-secondary);
+}
+
+.breadcrumbs .breadcrumb-current {
+    color: var(--color-text-secondary);
+}
+
+.results-section .page-container {
+    padding-top: var(--spacing-m);
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-l);
+}
+
+.results-count {
+    font-size: var(--font-size-m);
+    color: var(--color-text-primary);
+}
+
+.results-sort {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-s);
+    background: transparent;
+    color: var(--color-text-primary);
+    font-weight: 700;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.results-grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-l);
+    margin-bottom: var(--spacing-3xl);
+    /* 48px bottom spacing before footer */
+}
+
+.result-card {
+    background: var(--color-bg-page);
+    border-radius: 1rem;
+    /* 16px as in Figma */
+    padding: var(--spacing-m);
+    border: 1px solid var(--color-border-subtle);
+}
+
+.result-card-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 500;
+    color: var(--color-text-primary-color);
+    line-height: 1.5;
+    max-height: 3.75rem;
+    /* approx 60px */
+    overflow: hidden;
+}
+
+.result-card-meta {
+    display: flex;
+    gap: var(--spacing-l);
+    align-items: center;
+    margin-top: var(--spacing-s);
+}
+
+.tag {
+    background: var(--color-primary-light);
+    color: var(--color-primary-dark);
+    padding: 0 var(--spacing-s);
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    border-radius: var(--radius-s);
+    font-size: var(--font-size-xs);
+}
+
+.contact {
+    display: flex;
+    gap: var(--spacing-l);
+    align-items: center;
+}
+
+.contact .phone-text,
+.contact .address-text {
+    margin-left: 0.5rem;
+    font-size: var(--font-size-s);
+    color: var(--color-text-secondary);
+}
+
+.icon-small {
+    width: 1.125rem;
+    height: 1.125rem;
+    display: inline-block;
+}

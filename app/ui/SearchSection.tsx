@@ -4,6 +4,7 @@ import { useCallback, useEffect, useId, useRef, useState } from 'react';
 import { GovFormSearch, GovFormInput, GovButton } from '@gov-design-system-ce/react';
 import Image from 'next/image';
 import FilterChips from './FilterChips';
+import Breadcrumbs from './Breadcrumbs';
 import type { FilterValues } from './AdvancedFilterPanel';
 import { MOCK_COMPANIES } from '../../lib/mockCompanies';
 
@@ -16,10 +17,12 @@ type SearchSectionProps = {
     onAdvancedSearchClick?: () => void;
     appliedFilters?: FilterValues | null;
     onRemoveFilter?: (key: keyof FilterValues) => void;
+    initialQuery?: string;
+    showBreadcrumbs?: boolean;
 };
 
-export default function SearchSection({ onSearch, onAdvancedSearchClick, appliedFilters = null, onRemoveFilter }: SearchSectionProps) {
-    const [searchQuery, setSearchQuery] = useState('');
+export default function SearchSection({ onSearch, onAdvancedSearchClick, appliedFilters = null, onRemoveFilter, initialQuery, showBreadcrumbs = false }: SearchSectionProps) {
+    const [searchQuery, setSearchQuery] = useState(initialQuery ?? '');
     const [suggestions, setSuggestions] = useState<string[]>([]);
     const [isOpen, setIsOpen] = useState(false);
     const [highlightedIndex, setHighlightedIndex] = useState<number>(-1); // -1 means none
@@ -28,8 +31,10 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
 
     const debounceRef = useRef<number | null>(null);
     const inputRef = useRef<HTMLInputElement | null>(null);
+    // Flag used to suppress the blur close logic when a user submits a search
+    const isSubmittingRef = useRef(false);
     const id = useId();
-    const listboxId = `autocomplete-list-${id}`;
+    const listboxId = `autocomplete-list-${id}`; 
 
     // Load recent searches from localStorage
     useEffect(() => {
@@ -80,6 +85,22 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
         setShowingRecent(false);
     }, []);
 
+    // If an initialQuery is provided (e.g., on the results page), prefill and run filter
+    useEffect(() => {
+        if (initialQuery !== undefined) {
+            setSearchQuery(initialQuery ?? '');
+            const trimmed = (initialQuery ?? '').trim();
+            if (trimmed) {
+                runFilter(trimmed);
+                // store as recent search to keep behaviour consistent
+                saveRecentSearch(trimmed);
+            } else {
+                setSuggestions([]);
+                setIsOpen(false);
+            }
+        }
+    }, [initialQuery, runFilter, saveRecentSearch]);
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         setSearchQuery(value);
@@ -115,6 +136,11 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
     };
 
     const handleBlur = () => {
+        // If we are submitting a search, skip the delayed close to avoid race conditions
+        if (isSubmittingRef.current) {
+            return;
+        }
+
         // close after a short delay to allow keyboard interactions
         window.setTimeout(() => {
             setIsOpen(false);
@@ -191,8 +217,25 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
         }
 
         if (e.key === 'Enter') {
-            // Do not submit or select yet - user will implement this later
             e.preventDefault();
+            const val = searchQuery.trim();
+            if (val) {
+                // Mark that we're submitting so blur handler doesn't reopen the list
+                isSubmittingRef.current = true;
+                // Reset the flag shortly after to avoid sticky state (500ms is sufficient)
+                window.setTimeout(() => { isSubmittingRef.current = false; }, 500);
+
+                // Close suggestions first to avoid race conditions with navigation
+                setIsOpen(false);
+                setSuggestions([]);
+                setShowingRecent(false);
+                // Clear input to ensure the design-system input hides its internal suggestions
+                setSearchQuery('');
+                // Persist to recent searches
+                saveRecentSearch(val);
+                // Trigger navigation/search handler if provided
+                if (onSearch) onSearch(val);
+            }
             return;
         }
     };
@@ -221,12 +264,34 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
         }
     }, [suggestions, highlightedIndex]);
 
+    // When suggestions are closed, ensure all autocomplete state and UI is fully reset.
+    useEffect(() => {
+        if (!isOpen) {
+            // Defensive reset of suggestion state
+            setSuggestions([]);
+            setShowingRecent(false);
+            setHighlightedIndex(-1);
+            // Stop treating as submitting (safety net)
+            isSubmittingRef.current = false;
+
+            // If the input is still focused, blur it to make sure the design-system component hides its internal list
+            if (inputRef.current && document.activeElement === inputRef.current) {
+                // Use a tick to let React updates propagate first
+                window.setTimeout(() => {
+                    if (inputRef.current && document.activeElement === inputRef.current) {
+                        inputRef.current.blur();
+                    }
+                }, 0);
+            }
+        }
+    }, [isOpen]);
+
     // handleClear is implemented above — duplicate removed to avoid redeclaration
 
     return (
         <section className="search-section">
             <div className="page-container">
-                <h1 className="search-title">Search entity</h1>
+                {showBreadcrumbs ? <Breadcrumbs query={searchQuery} /> : <h1 className="search-title">Search entity</h1>} 
 
                 <div className="search-input-wrapper" onKeyDown={handleKeyDown} onMouseDown={handleWrapperMouseDown} onClick={handleFocus}>
                     <GovFormSearch
@@ -237,8 +302,23 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
                                 color="primary"
                                 size="l"
                                 onClick={() => {
-                                    if (onSearch && searchQuery.trim()) onSearch(searchQuery.trim());
-                                }}
+                                    const val = searchQuery.trim();
+                                    if (!val) return;
+
+                                    // Mark that we're submitting so blur handler doesn't reopen the list
+                                    isSubmittingRef.current = true;
+                                    window.setTimeout(() => { isSubmittingRef.current = false; }, 500);
+
+                                    // Close suggestions first
+                                    setIsOpen(false);
+                                    setSuggestions([]);
+                                    setShowingRecent(false);
+                                    // Clear the input so the webcomponent hides its internal suggestions
+                                    setSearchQuery('');
+                                    // Persist and then navigate
+                                    saveRecentSearch(val);
+                                    if (onSearch) onSearch(val);
+                                }}  
                                 aria-label="Search"
                             >
                                 <Image
