@@ -205,6 +205,28 @@
     background-color: var(--color-primary-50);
 }
 
+.search-clear-button {
+    position: absolute;
+    right: 4.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    background: transparent;
+    border: none;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--icon-neutral);
+    border-radius: var(--radius-s);
+}
+
+.search-clear-button:hover {
+    background-color: var(--button-outlined-neutral-hover);
+}
+
 .advanced-search-link {
     display: inline-block;
     font-family: var(--font-family);

@@ -198,6 +198,18 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
         }
     }, [suggestions, highlightedIndex]);
 
+    const handleClear = () => {
+        setSearchQuery('');
+        setSuggestions([]);
+        setIsOpen(false);
+        setShowingRecent(false);
+        setHighlightedIndex(-1);
+        // Refocus input for better UX
+        setTimeout(() => {
+            inputRef.current?.focus();
+        }, 0);
+    };
+
     return (
         <section className="search-section">
             <div className="page-container">
@@ -243,6 +255,17 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
                             aria-activedescendant={getActiveDescendant()}
                         />
                     </GovFormSearch>
+
+                    {searchQuery.trim() !== '' && (
+                        <button
+                            type="button"
+                            className="search-clear-button"
+                            onClick={handleClear}
+                            aria-label="Clear search"
+                        >
+                            <Image src="/icons/components/x-lg.svg" alt="" width={16} height={16} className="icon-currentColor" />
+                        </button>
+                    )}
 
                     {isOpen && suggestions.length > 0 && (
                         <div className="autocomplete-list" role="listbox" id={listboxId} aria-label={showingRecent ? 'Recent searches' : 'Suggestions'}>
