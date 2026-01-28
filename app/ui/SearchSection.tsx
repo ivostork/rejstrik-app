@@ -149,11 +149,11 @@ export default function SearchSection({ onSearch, onAdvancedSearchClick, applied
         setHighlightedIndex(-1);
 
         // Clear applied filters if a removal callback is provided
-        if (appliedFilters && onRemoveFilter) {
-            (Object.keys(appliedFilters) as Array<keyof FilterValues>).forEach((k) => {
-                if (appliedFilters[k]) onRemoveFilter(k);
-            });
-        }
+        // if (appliedFilters && onRemoveFilter) {
+        //     (Object.keys(appliedFilters) as Array<keyof FilterValues>).forEach((k) => {
+        //         if (appliedFilters[k]) onRemoveFilter(k);
+        //     });
+        // }
 
         // Refocus input for better UX
         setTimeout(() => {
