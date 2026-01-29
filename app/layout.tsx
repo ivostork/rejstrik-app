@@ -16,7 +16,7 @@ export default function RootLayout({
         <html lang="en" data-theme="light">
             <body>
                 {children}
-                <PageNav />
+                {/* <PageNav /> */}
             </body>
         </html>
     );
