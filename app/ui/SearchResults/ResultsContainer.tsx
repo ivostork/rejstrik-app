@@ -6,6 +6,8 @@ import ResultsCard from './ResultsCard';
 import { MOCK_COMPANIES } from '../../../lib/mockCompanies';
 import type { FilterValues } from '../AdvancedFilterPanel';
 
+import { getCompanyIdByName } from '../../../lib/companyUtils';
+
 type Props = {
     query?: string;
     filters?: FilterValues | null;
@@ -52,7 +54,7 @@ export default function ResultsContainer({ query = '', filters = null }: Props) 
                 ) : (
                     <div className="results-grid">
                         {results.map((r) => (
-                            <ResultsCard key={r} name={r} />
+                            <ResultsCard key={r} name={r} id={getCompanyIdByName(r)} />
                         ))}
                     </div>
                 )}

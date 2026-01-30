@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Header from './ui/Header';
 import SearchSection from './ui/SearchSection';
@@ -9,7 +9,7 @@ import FaqSection from './ui/FaqSection';
 import Footer from './ui/Footer';
 import AdvancedFilterPanel, { FilterValues } from './ui/AdvancedFilterPanel';
 
-export default function Home() {
+function HomeContent() {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const [appliedFilters, setAppliedFilters] = useState<FilterValues | null>(null);
 
@@ -89,5 +89,13 @@ export default function Home() {
                 initialValues={appliedFilters}
             />
         </div>
+    );
+}
+
+export default function Home() {
+    return (
+        <Suspense fallback={<div className="page-wrapper"><Header /><main><div className="page-container">Loading...</div></main><Footer /></div>}>
+            <HomeContent />
+        </Suspense>
     );
 }

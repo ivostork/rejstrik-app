@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Header from '../../ui/Header';
 import Footer from '../../ui/Footer';
@@ -7,7 +8,7 @@ import SearchSection from '../../ui/SearchSection';
 import ResultsContainer from '../../ui/SearchResults/ResultsContainer';
 import type { FilterValues } from '../../ui/AdvancedFilterPanel';
 
-export default function ResultsPage() {
+function ResultsContent() {
     const searchParams = useSearchParams();
     const q = searchParams.get('q') ?? '';
 
@@ -20,11 +21,21 @@ export default function ResultsPage() {
     } as FilterValues;
 
     return (
+        <>
+            <SearchSection initialQuery={q} appliedFilters={filters} showBreadcrumbs />
+            <ResultsContainer query={q} filters={filters} />
+        </>
+    );
+}
+
+export default function ResultsPage() {
+    return (
         <div className="page-wrapper">
             <Header />
             <main>
-                <SearchSection initialQuery={q} appliedFilters={filters} showBreadcrumbs />
-                <ResultsContainer query={q} filters={filters} />
+                <Suspense fallback={<div className="page-container">Loading results...</div>}>
+                    <ResultsContent />
+                </Suspense>
             </main>
             <Footer />
         </div>
